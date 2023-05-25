@@ -31,6 +31,18 @@ if ( empty($name) || empty($email) || empty($password) || empty($confirm_passwor
         'email' => $email,
         'password' => password_hash( $password, PASSWORD_DEFAULT)
     ]);
+
+    // retrieve the newly signup user data
+    $sql = "SELECT * FROM users where email = :email";
+    // prepare
+    $query = $database->prepare( $sql );
+    // execute
+    $query->execute([
+        'email' => $email
+        ]);
+    // fetch (eat)
+    $user = $query->fetch();
+
     $_SESSION["user"] = $user;
 
     header("Location: /dashboard");
