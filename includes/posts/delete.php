@@ -1,6 +1,6 @@
 <?php
 
-  if ( isUserLoggedIn() ) {
+  if ( !isUserLoggedIn() ) {
     header("Location: /");
     exit;
   }

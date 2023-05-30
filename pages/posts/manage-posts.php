@@ -110,8 +110,8 @@ $posts = $query->fetchAll();
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
 
-                          <form method= "POST" action="/posts/delete">
-                            <input type="hidden" name="id" value= "<?= $post['id']; ?>" />
+                          <form method="POST" action="/posts/delete">
+                            <input type="hidden" name="id" value="<?= $post['id']; ?>"/>
                             <button type="submit" class="btn btn-danger">Yes, please delete</button>
                           </form>
                         </div>
