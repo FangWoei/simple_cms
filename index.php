@@ -18,12 +18,24 @@
             require 'includes/auth/signup.php';
             break;
 
-        case "users/add":
-            require "includes/users/add.php";
+        case "posts/add":
+            require "includes/posts/add.php";
+            break;
+    
+        case "posts/edit":
+            require "includes/posts/edit.php";
+            break;
+
+        case "posts/delete":
+            require "includes/posts/delete.php";
             break;
 
         case "users/changepwd":
             require "includes/users/changepwd.php";
+            break;
+
+        case "users/add":
+            require "includes/users/add.php";
             break;
 
         case "users/edit":

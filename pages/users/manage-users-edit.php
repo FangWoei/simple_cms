@@ -1,5 +1,12 @@
 <?php
 
+  // check if the current user is an admin or not
+  if ( !isAdmin() ) {
+    // if current user is not an admin, redirect to dashboard
+    header("Location: /dashboard");
+    exit;
+  }
+
 // make sure the id parameter is available in the url
 if ( isset( $_GET['id'] ) ) {
   // load database
