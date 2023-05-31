@@ -18,6 +18,11 @@ function isUserLoggedIn() {
     return isUser() || isEditor() || isAdmin() ? true : false;
 }
 
+// short
+// function isUserLoggedIn() {
+//     return isset( $_SESSION['user'] ) ? true : false;
+// }
+
 function ofEditorAndAdmin() {
     return isEditor() || isAdmin() ? true : false;
 }

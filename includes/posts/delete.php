@@ -26,7 +26,7 @@
     ]);
 
     // set success message
-    $_SESSION["success"] = "user has been deleted.";
+    $_SESSION["success"] = "Post has been deleted.";
 
     // redirect
     header("Location: /manage-posts");
