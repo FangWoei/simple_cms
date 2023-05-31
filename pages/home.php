@@ -21,8 +21,7 @@ $database = connectToDB();
           <div class="text-end">
             <a href="/post?id=<?= $post['id']; ?>" class="btn btn-primary btn-sm">Read More</a>
           </div>
-          <?php } else {?>
-            <?php } ?>
+          <?php }?>
         </div>
       </div>
 
