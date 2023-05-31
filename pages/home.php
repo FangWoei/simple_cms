@@ -1,8 +1,8 @@
 <?php
 
 $database = connectToDB();
-
-$sql = "SELECT * FROM posts where status = 'publish'";
+//DESC and ASC - acens
+$sql = "SELECT * FROM posts where status = 'publish'ORDER BY id DESC";
   $query = $database->prepare($sql);
   $query->execute();
   $posts = $query->fetchAll();
