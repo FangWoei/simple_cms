@@ -2,7 +2,7 @@
 
 $database = connectToDB();
 
-  $sql = "SELECT * FROM posts";
+$sql = "SELECT * FROM posts where status = 'publish'";
   $query = $database->prepare($sql);
   $query->execute();
   $posts = $query->fetchAll();
@@ -12,20 +12,23 @@ $database = connectToDB();
 ?>
     <div class="container mx-auto my-5" style="max-width: 500px;">
       <h1 class="h1 mb-4 text-center">My Blog</h1>
-      <?php foreach ($posts as $post) { ?>
-        <?php if ($post['status'] == "publish") {?>
+      <?php foreach ($posts as $post) : ?>
       <div class="card mb-2">
         <div class="card-body">
           <h5 class="card-title"><?= $post['title']; ?></h5>
-          <p class="card-text"><?= $post['content']; ?></p>
+          <p class="card-text">
+          <?php 
+            $excerpt = str_split( $post['content'], 5 );
+            echo $excerpt[0] . "<strong>... read more</strong>"; 
+          ?></p>
+          </p>
           <div class="text-end">
             <a href="/post?id=<?= $post['id']; ?>" class="btn btn-primary btn-sm">Read More</a>
           </div>
-          <?php }?>
         </div>
       </div>
+      <?php endforeach; ?>
 
-      <?php } ?>
       <div class="mt-4 d-flex justify-content-center gap-3">
       <?php if ( isset( $_SESSION["user"] ) ) { ?>
         <a href="/logout" class="btn btn-link btn-sm">Logout</a>
