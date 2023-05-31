@@ -78,7 +78,7 @@ $posts = $query->fetchAll();
                     <?php 
                     if($post["status"] == "pending"){
                       echo "disabled";
-                    }else if($post["status"] == "pending"){
+                    }else if($post["status"] == "publish"){
                       echo " ";
                     }
                     ?>"
