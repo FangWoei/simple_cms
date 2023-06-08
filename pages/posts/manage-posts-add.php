@@ -1,5 +1,5 @@
 <?php
-if ( !isUserLoggedIn() ) {
+if ( !Auth::isUserLoggedIn() ) {
   header("Location: /");
   exit;
 }

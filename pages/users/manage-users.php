@@ -1,36 +1,26 @@
 <?php
 
   // check if the current user is an admin or not
-  if ( !isAdmin() ) {
+  if ( !Auth::isAdmin() ) {
     // if current user is not an admin, redirect to dashboard
     header("Location: /dashboard");
     exit;
   }
 
-  // load data from database
-  $database = connectToDB();
-
-
-  // get all the users
-  $sql = "SELECT * FROM users";
-  $query = $database->prepare($sql);
-  $query->execute();
-
-  // fetch the data from query
-  $users = $query->fetchAll();
+  $users = User::getUsers();
 
   require "parts/header.php";
 ?>
     <div class="container mx-auto my-5" style="max-width: 700px;">
       <div class="d-flex justify-content-between align-items-center mb-2">
-        <h1 class="h1">ManagWe Users</h1>
+        <h1 class="h1">Manage Users</h1>
         <div class="text-end">
           <a href="/manage-users-add" class="btn btn-primary btn-sm"
             >Add New User</a
           >
         </div>
       </div>
-      <div class="card mb-2 p-3">
+      <div class="card mb-2 p-4">
         <?php require "parts/success.php"; ?>
         <table class="table">
           <thead>
@@ -80,8 +70,8 @@
                     class="btn btn-warning btn-sm me-2"
                     ><i class="bi bi-key"></i
                   ></a>
-                   <!-- Button trigger modal -->
-                   <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-modal-<?= $user['id']; ?>">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-modal-<?= $user['id']; ?>">
                     <i class="bi bi-trash"></i
                     >
                   </button>
@@ -99,8 +89,12 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-
+                          <!-- 
+                            Delete Form 
+                            1. add action
+                            2. add method
+                            3. add input hidden field for id
+                          -->
                           <form method= "POST" action="/users/delete">
                             <input type="hidden" name="id" value= "<?= $user['id']; ?>" />
                             <button type="submit" class="btn btn-danger">Yes, please delete</button>

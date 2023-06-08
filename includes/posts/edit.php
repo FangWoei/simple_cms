@@ -23,15 +23,21 @@ if ( !isUserLoggedIn() ) {
         exit;
     }
     
-    $sql = "UPDATE posts SET title = :title, content = :content, status = :status WHERE id = :id";
+
+    $sql = "UPDATE posts 
+    SET title = :title, 
+    content = :content, 
+    status = :status, 
+    modified_by = :modified_by
+     WHERE id = :id";
     $query = $database->prepare($sql);
     $query->execute([
         'title' => $title,
         'content' => $content,
         'status' => $status,
-        'id' => $id
+        'id' => $id,
+        'modified_by' => $_SESSION["user"]['id']
     ]);
-
 
 
     // set success message

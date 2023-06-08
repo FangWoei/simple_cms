@@ -1,100 +1,91 @@
 <?php
-
     session_start();
 
-     require "includes/function.php";
+    // require all the functions files
+    require "includes/class-db.php";
+    require "includes/class-auth.php";
+    require "includes/class-user.php";
+    require "includes/class-post.php";
+    require "includes/class-comment.php";
+    
+    // require "includes/functions.php";
 
-    $path = parse_url( $_SERVER["REQUEST_URI"], PHP_URL_PATH );
-
-    $path = trim( $path, '/' );
+    // your website path
+    // parse_url will remove all the query string starting from the ?
+    $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+    // remove / using trim()
+    $path = trim( $path, '/');
 
     switch ($path) {
-
         case 'auth/login':
-            require 'includes/auth/login.php';
+            Auth::login();
             break;
-
         case 'auth/signup':
-            require 'includes/auth/signup.php';
+            Auth::signup();
             break;
-
-        case "posts/add":
-            require "includes/posts/add.php";
-            break;
-    
-        case "posts/edit":
-            require "includes/posts/edit.php";
-            break;
-
-        case "posts/delete":
-            require "includes/posts/delete.php";
-            break;
-
-        case "users/changepwd":
-            require "includes/users/changepwd.php";
-            break;
-
         case "users/add":
-            require "includes/users/add.php";
+            User::add();
             break;
-
         case "users/edit":
-            require "includes/users/edit.php";
+            User::edit();
             break;
-
+        case "users/changepwd":
+            User::changepwd();
+            break;
         case "users/delete":
-            require "includes/users/delete.php";
+            User::delete();
             break;
-
-        case 'manage-posts':
-            require "pages/posts/manage-posts.php";
+        case "posts/add":
+            Post::add();
             break;
-
-        case 'manage-posts-add':
-            require "pages/posts/manage-posts-add.php";
+        case "posts/edit":
+            Post::edit();
             break;
-
-        case 'manage-posts-edit':
-            require "pages/posts/manage-posts-edit.php";
+        case "posts/delete":
+            Post::delete();
             break;
-
-        case 'manage-users':
-            require "pages/users/manage-users.php";
+        case "comments/add":
+            require "includes/comments/add.php";
             break;
-
-        case 'manage-users-add':
-            require "pages/users/manage-users-add.php";
+        case 'dashboard': //condition
+            require "pages/dashboard.php";
             break;
-
-        case 'manage-users-edit':
-            require "pages/users/manage-users-edit.php";
-            break;
-
-        case 'manage-users-changepwd':
-            require "pages/users/manage-users-changepwd.php";
-            break;
-
-        case 'login':
+        case 'login': //condition
             require "pages/login.php";
             break;
-
+        case 'logout': //condition
+            Auth::logout();
+            break;
+        case 'manage-posts': //condition
+            require "pages/posts/manage-posts.php";
+            break;
+        case 'manage-posts-add': //condition
+            require "pages/posts/manage-posts-add.php";
+            break;
+        case 'manage-posts-edit': //condition
+            require "pages/posts/manage-posts-edit.php";
+            break;
+        case 'manage-users': //condition
+            require "pages/users/manage-users.php";
+            break;
+        case 'manage-users-add': //condition
+            $_SESSION["title"] = "Add New User";
+            require "pages/users/manage-users-add.php";
+            break;
+        case 'manage-users-changepwd': //condition
+            require "pages/users/manage-users-changepwd.php";
+            break;
+        case 'manage-users-edit': //condition
+            require "pages/users/manage-users-edit.php";
+            break;
         case 'signup':
             require "pages/signup.php";
             break;
-
-        case 'logout':
-            require "pages/logout.php";
-            break;
-
         case 'post':
             require "pages/post.php";
             break;
-    
-        case 'dashboard':
-            require "pages/dashboard.php";
-            break;
-        
         default:
             require "pages/home.php";
             break;
     }
+?>

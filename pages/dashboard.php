@@ -1,6 +1,5 @@
 <?php
-
-  require "parts/header.php";
+  require "parts/header.php"
 
 ?>
     <div class="container mx-auto my-5" style="max-width: 800px;">
@@ -24,7 +23,7 @@
           </div>
         </div>
         <!-- only show this option if is admin -->
-        <?php if ( isAdmin() ) : ?>
+        <?php if ( Auth::isAdmin() ) : ?>
         <div class="col">
           <div class="card mb-2">
             <div class="card-body">
@@ -53,6 +52,4 @@
 
 <?php
 
-require "parts/footer.php";
-
-?>
+  require "parts/footer.php";

@@ -1,7 +1,7 @@
 <?php
 
   // check if the current user is an admin or not
-  if ( !isAdmin() ) {
+  if ( !Auth::isAdmin() ) {
     // if current user is not an admin, redirect to dashboard
     header("Location: /dashboard");
     exit;
@@ -18,8 +18,8 @@
           method="POST"
           action="users/add"
           >
-          <div class="mb-3">
           <?php require "parts/error.php";?>
+          <div class="mb-3">
             <div class="row">
               <div class="col">
                 <label for="name" class="form-label">Name</label>

@@ -1,11 +1,11 @@
 <?php
 
-  // check if the current user is an admin or not
-  if ( !isAdmin() ) {
-    // if current user is not an admin, redirect to dashboard
-    header("Location: /dashboard");
-    exit;
-  }
+    // check if the current user is an admin or not
+    if ( !Auth::isAdmin() ) {
+        // if current user is not an admin, redirect to dashboard
+        header("Location: /dashboard");
+        exit;
+    }
 
     // load the database
     $database = connectToDB();
@@ -43,8 +43,7 @@
         $_SESSION['error'] = $error;
         header("Location: /manage-users-edit?id=$id");
         exit;
-    }
-    
+    }   
     // if no error found, update the user data based whatever in the $_POST data
     $sql = "UPDATE users SET name = :name, email = :email, role = :role WHERE id = :id";
     $query = $database->prepare($sql);
@@ -55,12 +54,9 @@
         'id' => $id
     ]);
 
-
-
     // set success message
     $_SESSION["success"] = "user has been edited.";
-    $_SESSION['update_user_email'] = $email;
-    
+
     // redirect
     header("Location: /manage-users");
     exit;

@@ -1,24 +1,9 @@
 <?php
-if ( !isUserLoggedIn() ) {
+if ( !Auth::isUserLoggedIn() ) {
   header("Location: /");
   exit;
 }
-if ( isset( $_GET['id'] ) ) {
-  $database = connectToDB();
-
-  $sql = "SELECT * FROM posts WHERE id = :id";
-  $query = $database->prepare( $sql );
-  $query->execute([
-    'id' => $_GET['id']
-  ]);
-  $posts = $query->fetch();
-
-
-
-} else {
-  header("Location: /manage-posts");
-  exit;
-}
+$post = Post::getPostByID( $_GET['id'] );
 
   require "parts/header.php";
 
@@ -39,22 +24,37 @@ if ( isset( $_GET['id'] ) ) {
               class="form-control"
               id="post-title"
               name="title"
-              value="<?= $posts['title']; ?>"
+              value="<?= $post['title']; ?>"
             />
           </div>
           <div class="mb-3">
             <label for="post-content" class="form-label">Content</label>
-            <textarea class="form-control" id="post-content" rows="10" name="content"><?= $posts['content']; ?></textarea>
+            <textarea class="form-control" id="post-content" rows="10" name="content"><?= $post['content']; ?></textarea>
           </div>
           <div class="mb-3">
             <label for="post-content" class="form-label">Status</label>
             <select class="form-control" id="post-status" name="status">
-              <option value="pending" <?= $posts['status'] === 'pending' ? 'selected' : ''; ?>>Pending for Review</option>
-              <option value="publish" <?= $posts['status'] === 'publish' ? 'selected' : ''; ?>>Publish</option>
+              <option value="pending" <?= $post['status'] === 'pending' ? 'selected' : ''; ?>>Pending for Review</option>
+              <option value="publish" <?= $post['status'] === 'publish' ? 'selected' : ''; ?>>Publish</option>
             </select>
           </div>
+          <div class="mb-3">
+            Last modified by: 
+              <?php 
+                // $sql = "SELECT * FROM users where id = :id";
+                // $query = $database->prepare( $sql );
+                // $query->execute([
+                //   'id' => $post["modified_by"]
+                // ]);
+                // $user = $query->fetch();
+                // echo $user["name"];
+                echo $post["name"];
+
+              ?> 
+              on ( <?= $post["modified_at"]; ?> )
+          </div>
           <div class="text-end">
-          <input type="hidden" name="id" value="<?= $posts['id']; ?>" />
+          <input type="hidden" name="id" value="<?= $post['id']; ?>" />
             <button type="submit" class="btn btn-primary">Update</button>
           </div>
         </form>

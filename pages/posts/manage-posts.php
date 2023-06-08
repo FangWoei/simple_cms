@@ -1,27 +1,10 @@
 <?php
-if ( !isUserLoggedIn() ) {
+if ( !Auth::isUserLoggedIn() ) {
   header("Location: /");
   exit;
 }
 
-$database = connectToDB();
-
-if ( ofEditorAndAdmin() ){
-  $sql = "SELECT * FROM posts";
-  $query = $database->prepare($sql);
-  $query->execute();
-  $posts = $query->fetchAll();
-}else{
-$sql = "SELECT * FROM posts where user_id = :user_id";
-$query = $database->prepare($sql);
-$query->execute(
-  [
-    'user_id' => $_SESSION["user"]["id"]
-  ]
-);
-$posts = $query->fetchAll();
-}
-
+$posts = Post::getPostsByUserRole();
 
   require "parts/header.php";
 
@@ -42,7 +25,8 @@ $posts = $query->fetchAll();
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col" style="width: 40%;">Title</th>
+              <th scope="col" style="width: 15%;">Title</th>
+              <th scope="col">Created By</th>
               <th scope="col">Status</th>
               <th scope="col" class="text-end">Actions</th>
             </tr>
@@ -59,6 +43,7 @@ $posts = $query->fetchAll();
               ?>">
               <th scope="row"><?= $post['id'] ?></th>
               <td><?= $post['title'] ?></td>
+              <td><?= $post['user_name']; ?></td>
               <td><span class="<?php 
                 if($post["status"] == "pending"){
                   echo "badge bg-warning";
