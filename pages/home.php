@@ -30,8 +30,9 @@
           <h5 class="card-title"><?= $post['title']; ?></h5>
           <p class="card-text"><?php 
             $excerpt = str_split( $post['content'], 100 );
-            echo $excerpt[0] . "... read more"; 
-          ?></p>
+            echo $excerpt[0]; ?>
+            <a href="/post?id=<?= $post['id']; ?>">... read more</a>
+          </p>
           <div class="text-end">
             <a href="/post?id=<?= $post['id']; ?>" class="btn btn-primary btn-sm">Read More</a>
           </div>

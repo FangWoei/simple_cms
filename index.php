@@ -45,7 +45,7 @@
             Post::delete();
             break;
         case "comments/add":
-            require "includes/comments/add.php";
+            Comment::add();
             break;
         case 'dashboard': //condition
             require "pages/dashboard.php";

@@ -25,33 +25,23 @@
         ?>
         <!-- comments -->
         <div class="mt-3">
+            <?php if ( Auth::isUserLoggedIn($post['id']) ) : ?>
             <h4>Comments</h4>
             <?php
-                // load the comments from database
-                $sql = "SELECT
-                    comments.*,
-                    users.name
-                    FROM comments
-                    JOIN users
-                    ON comments.user_id = users.id
-                    WHERE post_id = :post_id ORDER BY id DESC";
-                $query = $database->prepare($sql);
-                $query->execute([
-                    "post_id" => $post["id"]
-                ]);
-
-                $comments = $query->fetchAll();
-
-                foreach ($comments as $comment) :
+                $comments = Comment::getCommentsByPostID( $post['id']);
             ?>
+                <?php
+                foreach ($comments as $comment) :
+                ?>
             <div class="card mt-2 <?php echo ( $comment["user_id"] === $_SESSION['user']['id'] ? "bg-info" : '' ); ?>">
                 <div class="card-body">
                     <p class="card-text"><?= $comment['comments']; ?></p>
-                    <p class="card-text"><small class="text-muted">Commented By <?= $comment['name']; ?></small></p>
+                    <p class="card-text"><small class="text-muted" style="font-size: 10px;" >Commented By <?= $comment['name']; ?></small></p>
                 </div>
             </div>
             <?php endforeach; ?>
-            <?php if ( Auth::isUserLoggedIn() ) : ?>
+            <?php endif; ?>
+            <?php if ( Auth::isUserLoggedIn($post['id']) ) : ?>
             <form
                 action="/comments/add"
                 method="POST"    
