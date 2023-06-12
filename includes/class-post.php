@@ -5,25 +5,14 @@ class Post
 
     public static function getPublishPosts()
     {
-        if ( isset( $_GET['id'] ) ) {
-
             $database = new DB();
     
-            return $database->fetch(
-            "SELECT * FROM posts WHERE id = :id AND status = 'publish'",
-            [
-                'id' => $_GET['id']
-            ]);
-    
-            if ( !$post ) {
-                // if post don't exists, then we redirect back to home
-                header("Location: /");
-                exit;
-            }
-    
-        } else {
-            header("Location: /");
-        }
+            return $database->fetchAll(
+                "SELECT * FROM posts 
+                WHERE status = 'publish'
+                ORDER BY id DESC"
+                );
+
     }
 
     public static function getPostsByUserRole()
@@ -60,7 +49,7 @@ class Post
 
     }
 
-    public static function getPostByID( $post_id )
+    public static function getPostByID()
     {
         if ( isset( $_GET['id'] ) ) {
             $database = new DB();

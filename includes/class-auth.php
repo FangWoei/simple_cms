@@ -17,7 +17,7 @@ class Auth
                 [
                     'email' => $email
                 ]
-            );
+                );
             if (empty($user)){
                 $error = "The email provided does not exists";
             } else {
@@ -30,6 +30,11 @@ class Auth
                     // if password is incorrect
                     $error = "The password provided is not match";
                 }
+            }
+            if ( isset( $error ) ) {
+                $_SESSION['error'] = $error;
+                header("Location: /login");
+                exit;
             }
         }
     }

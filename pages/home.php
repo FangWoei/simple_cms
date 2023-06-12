@@ -1,24 +1,14 @@
 <?php
 
-  // load data from database
-  // $database = connectToDB();
+  // $keyword = isset( $_GET["keyword"] ) ? $_GET["keyword"] : "";
 
-  // ASC - acens
-  // $sql = "SELECT * FROM posts where status = 'publish' ORDER BY id DESC";
-  // $query = $database->prepare($sql);
-  // $query->execute();
-
-  // fetch the data from query
-  // $posts = $query->fetchAll();
-
-  $keyword = isset( $_GET["keyword"] ) ? $_GET["keyword"] : "";
-
-  $database = new DB();
-  $posts = $database->fetchAll(
-    "SELECT * FROM posts 
-    WHERE status = 'publish' AND content like '%$keyword%'
-    ORDER BY id DESC"
-  );
+  // $database = new DB();
+  // $posts = $database->fetchAll(
+  //   "SELECT * FROM posts 
+  //   WHERE status = 'publish' AND content like '%$keyword%'
+  //   ORDER BY id DESC"
+  // );
+  $posts = Post::getPublishPosts();
 
   require "parts/header.php";
 ?>
@@ -40,13 +30,13 @@
       </div>
       <?php endforeach; ?>
 
-      <form 
+      <!-- <form 
         action=""
         method="GET"
         class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" name="keyword" value="<?= $keyword; ?>">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      </form> -->
 
       <div class="mt-4 d-flex justify-content-center gap-3">
       <?php if ( Auth::isUserLoggedIn() ) { ?>

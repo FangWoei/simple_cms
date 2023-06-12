@@ -1,7 +1,7 @@
 <?php
 
     // make sure there is an id query string in the url
-    $post = Post::getPublishPosts();
+    $post = Post::getPostByID();
     
     require "parts/header.php";
 ?>
@@ -25,7 +25,7 @@
         ?>
         <!-- comments -->
         <div class="mt-3">
-            <?php if ( Auth::isUserLoggedIn($post['id']) ) : ?>
+            <?php if ( Auth::isUserLoggedIn()) : ?>
             <h4>Comments</h4>
             <?php
                 $comments = Comment::getCommentsByPostID( $post['id']);
@@ -41,7 +41,7 @@
             </div>
             <?php endforeach; ?>
             <?php endif; ?>
-            <?php if ( Auth::isUserLoggedIn($post['id']) ) : ?>
+            <?php if ( Auth::isUserLoggedIn() ) : ?>
             <form
                 action="/comments/add"
                 method="POST"    
