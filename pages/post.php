@@ -7,6 +7,11 @@
 ?>
     <div class="container mx-auto my-5" style="max-width: 500px;">
         <h1 class="h1 mb-4 text-center"><?= $post['title']; ?></h1>
+        <?php if ( $post['image'] ) : ?>
+        <div class="text-center">
+            <img src="uploads/<?= $post['image']; ?>" class="img-fluid" />
+        </div>
+        <?php endif; ?>
         <?php  
             echo nl2br( $post['content'] );
             // // turn this content to an array

@@ -32,7 +32,10 @@ $posts = Post::getPostsByUserRole();
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($posts as $post) { ?>
+            <?php foreach ($posts as $post) { 
+              $comments = Comment::getCommentsByPostID( $post["id"] );
+
+              ?>
             <tr class="<?php
                 if ( 
                   isset( $_SESSION['new_post'] ) && 
@@ -42,7 +45,12 @@ $posts = Post::getPostsByUserRole();
                 }
               ?>">
               <th scope="row"><?= $post['id'] ?></th>
-              <td><?= $post['title'] ?></td>
+              <td><?= $post['title'] ?>
+              <span class="badge bg-success ms-1">
+                <i class="bi bi-chat-left-text me-1"></i>
+                <?= count( $comments ); ?>
+              </span>
+            </td>
               <td><?= $post['user_name']; ?></td>
               <td><span class="<?php 
                 if($post["status"] == "pending"){

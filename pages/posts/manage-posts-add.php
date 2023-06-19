@@ -16,6 +16,7 @@ if ( !Auth::isUserLoggedIn() ) {
       <form
           method="POST"
           action="posts/add"
+          enctype="multipart/form-data"
           >
           <div class="mb-3">
             <label for="post-title" class="form-label">Title</label>
@@ -29,6 +30,10 @@ if ( !Auth::isUserLoggedIn() ) {
               rows="10"
               name="content"
             ></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="post-image" class="form-label">Image</label>
+            <input type="file" name="image" id="post-image" />
           </div>
           <div class="text-end">
             <button type="submit" class="btn btn-primary">Add</button>

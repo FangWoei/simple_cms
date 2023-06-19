@@ -84,7 +84,21 @@ class Post
            $title = $_POST['title'];
            $content = $_POST['content'];
                 
-            
+            // catch the image file
+            $image = $_FILES['image'];
+            // get image file name
+            $image_name = $image['name'];
+
+        // add image to the uploads folder
+        if ( !empty( $image_name ) ) {
+            // target the uploads folder
+            $target_dir = "uploads/";
+            // add the image name to the uploads folder
+            $target_file = $target_dir . basename( $image_name ); // output: uploads/fs.jpg
+            // move the file to the uploads folder
+            move_uploaded_file( $image["tmp_name"], $target_file );
+        }
+
             if ( empty( $title ) || empty($content) ) {
                 $error = 'All fields are required';
             }
@@ -92,14 +106,16 @@ class Post
             if( isset ($error)){
                 $_SESSION['error'] = $error;
                 header("Location: /manage-posts-add");    
+                exit;
             }
 
             
-                $sql = "INSERT INTO posts (`title`, `content`, `user_id`)
-                VALUES(:title, :content, :user_id)";
+                $sql = "INSERT INTO posts (`title`, `content`, `image`, `user_id`)
+                VALUES(:title, :content, :image, :user_id)";
                $database->insert($sql , [
                     'title' => $title,
                     'content' => $content,
+                    'image' => ( !empty( $image_name ) ? $image_name : null ), // if there is an image, put it to db. If not, set null
                     'user_id' => $_SESSION["user"]["id"]
                 ]);
         
@@ -123,7 +139,23 @@ class Post
             $title = $_POST['title'];
             $content = $_POST['content'];
             $status = $_POST['status'];
+            $original_image = $_POST['original_image'];
             $id = $_POST['id'];
+
+            // catch the image file
+            $image = $_FILES['image'];
+            // get image file name
+            $image_name = $image['name'];
+
+        // add image to the uploads folder
+        if ( !empty( $image_name ) ) {
+            // target the uploads folder
+            $target_dir = "uploads/";
+            // add the image name to the uploads folder
+            $target_file = $target_dir . basename( $image_name ); // output: uploads/fs.jpg
+            // move the file to the uploads folder
+            move_uploaded_file( $image["tmp_name"], $target_file );
+        }
         
         
             if(empty($title) || empty($content) || empty($status)){
@@ -141,13 +173,15 @@ class Post
             $database->update(
                 "UPDATE posts 
                 SET title = :title, 
-                content = :content, 
+                content = :content,
+                image = :image,
                 status = :status, 
                 modified_by = :modified_by
                  WHERE id = :id",
                 [
                 'title' => $title,
                 'content' => $content,
+                'image' => ( !empty( $image_name ) ? $image_name : ( !empty( $original_image ) ? $original_image : null ) ),
                 'status' => $status,
                 'id' => $id,
                 'modified_by' => $_SESSION["user"]['id']
@@ -166,12 +200,12 @@ class Post
     public static function delete()
     {
         
-  if ( !Auth::isUserLoggedIn() ) {
-    header("Location: /");
-    exit;
-  }
+    if ( !Auth::isUserLoggedIn() ) {
+        header("Location: /");
+        exit;
+    }
 
-  $database = new DB();
+    $database = new DB();
 
 
     $id = $_POST["id"];

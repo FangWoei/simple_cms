@@ -79,10 +79,12 @@ class User
             $error = "The email you inserted has already been used by another user. Please insert another email.";
         }
 
+
         // if error found, set error message session
         if( isset ($error)){
             $_SESSION['error'] = $error;
             header("Location: /manage-users-add");    
+            exit;
         } 
             
         // if no error found, process to account creation
@@ -211,5 +213,41 @@ class User
     
         header("Location: /manage-users");
         exit;
+    }
+
+    public static function actAsUser()
+    {
+        $db = new DB();
+
+        // get the user id that we want to act as
+        $id = $_POST['id'];
+
+        $act_as_user = $db->fetch(
+            "SELECT * FROM users where id = :id",
+            [
+                'id' => $id
+            ]
+        );
+
+        // store the current logged in user in another session
+        $_SESSION['original_user'] = $_SESSION["user"];
+
+        // replace the current user session with the act as user
+        $_SESSION["user"] = $act_as_user;
+
+        // redirect back to home page
+        header("Location: /");
+        exit;
+    }
+
+    public static function stopActing()
+    {
+        // replace the origina user session with the current user session
+        $_SESSION["user"] = $_SESSION['original_user'];
+        // once we overwrite, then we unset the original user session
+        unset( $_SESSION['original_user'] );
+         // redirect back to home page
+         header("Location: /manage-users");
+         exit;  
     }
 }

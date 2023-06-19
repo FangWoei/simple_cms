@@ -35,6 +35,12 @@
         case "users/delete":
             User::delete();
             break;
+        case "users/act-as-user":
+            User::actAsUser();
+            break;
+        case "users/stop-acting":
+            User::stopActing();
+            break;
         case "posts/add":
             Post::add();
             break;

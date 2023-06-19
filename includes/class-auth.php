@@ -84,6 +84,8 @@ class Auth
         }
 
         // recipe
+
+        
         $sql = "INSERT INTO users ( `name`, `email`, `password` )
             VALUES (:name, :email, :password)";
 

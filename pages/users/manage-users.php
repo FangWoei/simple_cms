@@ -70,6 +70,16 @@
                     class="btn btn-warning btn-sm me-2"
                     ><i class="bi bi-key"></i
                   ></a>
+                  <form
+                    method="POST"
+                    action="users/act-as-user"
+                    class="d-inline me-2"
+                    >
+                    <input type="hidden" name="id" value="<?= $user['id']; ?>" />
+                    <button type="submit"  class="btn btn-info btn-sm">
+                      <i class="bi bi-person"></i>
+                    </button>
+                  </form>
                   <!-- Button trigger modal -->
                   <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-modal-<?= $user['id']; ?>">
                     <i class="bi bi-trash"></i

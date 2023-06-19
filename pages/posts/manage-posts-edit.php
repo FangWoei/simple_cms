@@ -16,7 +16,8 @@ $post = Post::getPostByID( $_GET['id'] );
       <?php require "parts/error.php"; ?>
         <form
         method="POST"
-        action="/posts/edit">
+        action="/posts/edit"
+        enctype="multipart/form-data">
           <div class="mb-3">
             <label for="post-title" class="form-label">Title</label>
             <input
@@ -30,6 +31,14 @@ $post = Post::getPostByID( $_GET['id'] );
           <div class="mb-3">
             <label for="post-content" class="form-label">Content</label>
             <textarea class="form-control" id="post-content" rows="10" name="content"><?= $post['content']; ?></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="post-image" class="form-label">Image</label>
+            <input type="file" name="image" id="post-image" />
+            <?php if ( $post['image'] ) : ?>
+              <input type="hidden" name="original_image" value="<?= $post['image']; ?>" />
+              <p><img src="uploads/<?= $post['image']; ?>" width="150px" /></p>
+            <?php endif; ?>
           </div>
           <div class="mb-3">
             <label for="post-content" class="form-label">Status</label>
