@@ -41,9 +41,9 @@ if ( empty($name) || empty($email) || empty($password) || empty($confirm_passwor
         'email' => $email
         ]);
     // fetch (eat)
+    $_SESSION["user"] = $user;
     $user = $query->fetch();
 
-    $_SESSION["user"] = $user;
 
     header("Location: /dashboard");
     exit;

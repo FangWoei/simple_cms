@@ -1,5 +1,5 @@
 <?php
-  require "parts/header.php"
+  require "parts/header.php";
 
 ?>
     <div class="container mx-auto my-5" style="max-width: 800px;">
